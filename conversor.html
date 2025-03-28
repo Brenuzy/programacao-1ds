@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Conversor de TXT para PDF</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input {
+            margin: 10px;
+        }
+        button {
+            margin: 10px;
+            padding: 10px;
+            cursor: pointer;
+        }
+        iframe {
+            margin-top: 20px;
+            width: 80%;
+            height: 400px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+<body>
+    <h1>Conversor de TXT para PDF</h1>
+    <div>
+        <input type="file" id="arquivoTxt" accept=".txt">
+        <button onclick="converterParaPDF()">Gerar PDF</button>
+    </div>
+    <div>
+        <iframe id="pdfExibido"></iframe>
+    </div>
+
+    <script>
+        async function converterParaPDF() {
+            const arquivoTxt = document.getElementById('arquivoTxt').files[0];
+
+            if (!arquivoTxt) {
+                alert('Por favor, selecione um arquivo .txt.');
+                return;
+            }
+
+            const texto = await arquivoTxt.text(); // Lê o conteúdo do arquivo .txt
+            const { jsPDF } = window.jspdf; // Importa jsPDF da biblioteca
+            const pdf = new jsPDF();
+
+            // Adiciona o texto ao PDF
+            pdf.text(texto, 10, 10);
+
+            // Exibe o PDF na página
+            const pdfURL = pdf.output('bloburl');
+            document.getElementById('pdfExibido').src = pdfURL;
+
+            // Disponibiliza o PDF para download
+            pdf.save('arquivo_convertido.pdf');
+        }
+    </script>
+</body>
+</html>
