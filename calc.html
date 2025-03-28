@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de IMC</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input {
+            margin: 10px;
+        }
+        button {
+            margin: 10px;
+        }
+        #resultado {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Calculadora de IMC</h1>
+    <div>
+        <label for="peso">Peso (kg):</label>
+        <input type="number" id="peso" placeholder="Digite seu peso">
+    </div>
+    <div>
+        <label for="altura">Altura (m):</label>
+        <input type="number" step="0.01" id="altura" placeholder="Digite sua altura">
+    </div>
+    <div>
+        <button onclick="calcularIMC()">Calcular</button>
+        <button onclick="limparCampos()">Limpar</button>
+    </div>
+    <div id="resultado"></div>
+
+    <script>
+        function calcularIMC() {
+            const peso = parseFloat(document.getElementById('peso').value);
+            const altura = parseFloat(document.getElementById('altura').value);
+
+            if (peso > 0 && altura > 0) {
+                const imc = peso / (altura * altura);
+                document.getElementById('resultado').innerText = `Seu IMC é ${imc.toFixed(2)}`;
+            } else {
+                document.getElementById('resultado').innerText = 'Por favor, insira valores válidos.';
+            }
+        }
+
+        function limparCampos() {
+            document.getElementById('peso').value = '';
+            document.getElementById('altura').value = '';
+            document.getElementById('resultado').innerText = '';
+        }
+    </script>
+</body>
+</html>
