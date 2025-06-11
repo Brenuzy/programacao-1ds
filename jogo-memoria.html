@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo da Memória RAM</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 50px;
+        }
+        #gameContainer {
+            font-size: 24px;
+            margin: 20px;
+        }
+        #inputContainer {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Jogo da Memória RAM</h1>
+    <div id="gameContainer"></div>
+    <div id="inputContainer">
+        <input type="text" id="userInput" placeholder="Digite a sequência">
+        <button onclick="verificarResposta()">Verificar</button>
+    </div>
+    <p id="feedback"></p>
+
+    <script>
+        let sequencia = [];
+        let tempoExibicao = 3000; // Tempo de exibição da sequência (3 segundos)
+
+        function gerarSequencia() {
+            sequencia = [];
+            for (let i = 0; i < 5; i++) {
+                sequencia.push(Math.floor(Math.random() * 10)); // Gerando números aleatórios de 0 a 9
+            }
+            document.getElementById("gameContainer").textContent = sequencia.join(" ");
+            setTimeout(() => {
+                document.getElementById("gameContainer").textContent = "Memorize e tente lembrar!";
+            }, tempoExibicao);
+        }
+
+        function verificarResposta() {
+            let resposta = document.getElementById("userInput").value.split(" ").map(Number);
+            if (JSON.stringify(resposta) === JSON.stringify(sequencia)) {
+                document.getElementById("feedback").textContent = "Parabéns! Você acertou!";
+            } else {
+                document.getElementById("feedback").textContent = "Tente novamente! Dica: " + sequencia.slice(0, 3).join(" ");
+            }
+        }
+
+        gerarSequencia();
+    </script>
+
+</body>
+</html>
